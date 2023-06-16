@@ -160,6 +160,21 @@ const Sidebar = () => {
             Compliance Verification
           </div>
         </Link>
+        <Link
+          className="link"
+          // activeclassName="active"
+          href="/login"
+        >
+          <div className="icon">
+            <GrCompliance size={20} />
+          </div>
+          <div
+            className="link_text"
+            style={{ display: isOpen ? "block" : "none" }}
+          >
+            Login
+          </div>
+        </Link>
       </div>
     </div>
   );
