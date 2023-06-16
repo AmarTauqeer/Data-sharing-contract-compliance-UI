@@ -1,0 +1,5 @@
+.dashboard-card{
+    border: solid 1px;
+    border-radius: 30px;
+    min-height: 150px;
+}
