@@ -1,21 +1,21 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5000/contract/list_of_contracts/`);
+  const data = await fetch(`http://127.0.0.1:5005/contract/list_of_contracts/`);
   const res = await data.json();
 
-  const contData = await fetch(`http://127.0.0.1:5000/contract/contractors/`);
+  const contData = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
   const resContractor = await contData.json();
   // console.log(resContractor)
 
-  const termData = await fetch(`http://127.0.0.1:5000/contract/terms/`);
+  const termData = await fetch(`http://127.0.0.1:5005/contract/terms/`);
   const resTerm = await termData.json();
 
-  const sigData = await fetch(`http://127.0.0.1:5000/contract/signatures/`);
+  const sigData = await fetch(`http://127.0.0.1:5005/contract/signatures/`);
   const resSignature = await sigData.json();
 
   return { props: { res, resContractor, resTerm, resSignature } };
 };
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { GrAddCircle } from "react-icons/gr";
@@ -27,14 +27,15 @@ import Edit from "./edit";
 import Delete from "./delete";
 import { CgDetailsMore } from "react-icons/cg";
 import Detail from "./detail";
+import Link from "next/link";
 
 const Contract = (props) => {
   const [filterContracts, setFilterContracts] = useState([]);
   const [contractData, setContractData] = useState(props.res);
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
 
   const callBack = async (childData) => {
-    // console.log(childData);
     setContractData(childData);
   };
   const columns = [
@@ -316,59 +317,73 @@ const Contract = (props) => {
     setFilterContracts(filtered);
   };
 
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(getData);
+  }, []);
   return (
     <>
-      <div className="h3 mt-5 mb-5">Contract</div>
+      {user !== null && user !== undefined ? (
+        <>
+          {" "}
+          <div className="h3 mt-5 mb-5">Contract</div>
+          <div className="d-flex justify-content-between bd-highlight mb-3">
+            <div>
+              <span
+                className="input-group-text btn btn-sm btn-info"
+                style={{ color: "#fff" }}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                Add Contract &nbsp;
+                <GrAddCircle size={20} />
+              </span>
+            </div>
 
-      <div className="d-flex justify-content-between bd-highlight mb-3">
-        <div>
-          <span
-            className="input-group-text btn btn-sm btn-info"
-            style={{ color: "#fff" }}
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Add Contract &nbsp;
-            <GrAddCircle size={20} />
-          </span>
-        </div>
-
-        <div>
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search contract id"
-              onChange={handleChange}
-            />
-            <span className="input-group-text">
-              <FiSearch size={22} />
-            </span>
+            <div>
+              <div className="input-group mb-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search contract id"
+                  onChange={handleChange}
+                />
+                <span className="input-group-text">
+                  <FiSearch size={22} />
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-
-      {contractData !== undefined &&
-      contractData !== "No record is found"  ? (
-        <DataTable
-          columns={columns}
-          data={filterContracts.length >= 1 ? filterContracts : contractData}
-          pagination
-          customStyles={customStyle}
-          highlightOnHover
-          dense
-        />
+          {contractData !== undefined &&
+          contractData !== "No record is found" ? (
+            <DataTable
+              columns={columns}
+              data={
+                filterContracts.length >= 1 ? filterContracts : contractData
+              }
+              pagination
+              customStyles={customStyle}
+              highlightOnHover
+              dense
+            />
+          ) : (
+            "There are no records to display"
+          )}
+          {/* add modal */}
+          <Add handleCallBack={callBack} />
+          <Edit data={data} handleCallBack={callBack} />
+          <Detail data={data} />
+          <Delete id={data.id} handleCallBack={callBack} />
+        </>
       ) : (
-        "There are no records to display"
+        <h4 className="mt-5">
+          You are allowed to view this page. <br />
+          <br />
+          <Link href="/" style={{ fontSize: "24px", fontWeight: "bolder" }}>
+            Login
+          </Link>
+        </h4>
       )}
-
-      {/* add modal */}
-
-      <Add handleCallBack={callBack} />
-
-      <Edit data={data} handleCallBack={callBack} />
-      <Detail data={data} />
-      <Delete id={data.id} handleCallBack={callBack} />
     </>
   );
 };

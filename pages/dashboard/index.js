@@ -1,5 +1,5 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5000/contract/list_of_contracts/`);
+  const data = await fetch(`http://127.0.0.1:5005/contract/list_of_contracts/`);
   const res = await data.json();
 
   let countContract = 0;
@@ -11,7 +11,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const oblData = await fetch(`http://127.0.0.1:5000/contract/obligations/`);
+  const oblData = await fetch(`http://127.0.0.1:5005/contract/obligations/`);
   const resObligation = await oblData.json();
 
   let countObligation = 0;
@@ -23,7 +23,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const termData = await fetch(`http://127.0.0.1:5000/contract/terms/`);
+  const termData = await fetch(`http://127.0.0.1:5005/contract/terms/`);
   const resTerm = await termData.json();
 
   let countTerm = 0;
@@ -35,7 +35,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const contData = await fetch(`http://127.0.0.1:5000/contract/contractors/`);
+  const contData = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
   const resContractor = await contData.json();
 
   let countContractor = 0;
@@ -46,7 +46,6 @@ export const getServerSideProps = async () => {
       countContractor += 1;
     }
   }
-
 
   return {
     props: {
@@ -62,7 +61,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { FiChevronsRight } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { BsFillPersonPlusFill } from "react-icons/bs";
@@ -70,6 +69,7 @@ import { FaFileContract } from "react-icons/fa";
 import { FaClipboardList } from "react-icons/fa";
 import { HiClipboardList } from "react-icons/hi";
 import DataTable from "react-data-table-component";
+import Link from "next/link";
 
 const Dashborard = ({
   res,
@@ -81,6 +81,7 @@ const Dashborard = ({
   countObligation,
   countTerm,
 }) => {
+  const [user, setUser] = useState(null);
   const columns = [
     {
       name: "CATEGORY",
@@ -204,170 +205,193 @@ const Dashborard = ({
   const handleClause = (e) => {
     router.push("/obligation");
   };
+
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(getData);
+  }, []);
+
   return (
     <>
-      <div className="row mb-5">
-        <div className="col-sm-6 col-md-3 col-lg-3 col-12">
-          <div
-            className="card"
-            style={{
-              border: "solid 1px",
-              // borderRadius: "30px",
-              minHeight: "150px",
-              backgroundColor: "#088395",
-              color: "#fff",
-              fontWeight: "bolder",
-            }}
-          >
-            <div class="card-body">
-              <div className="d-flex justify-content-between">
-                <div className="col-auto">
-                  <div className="col-auto h5 fw-bolder">{countContract}</div>
-                  <div className="col-auto mt-3">Contract</div>
+      {user !== null && user !== undefined ? (
+        <>
+          <div className="row mb-5">
+            <div className="col-sm-6 col-md-3 col-lg-3 col-12">
+              <div
+                className="card"
+                style={{
+                  border: "solid 1px",
+                  // borderRadius: "30px",
+                  minHeight: "150px",
+                  backgroundColor: "#088395",
+                  color: "#fff",
+                  fontWeight: "bolder",
+                }}
+              >
+                <div class="card-body">
+                  <div className="d-flex justify-content-between">
+                    <div className="col-auto">
+                      <div className="col-auto h5 fw-bolder">
+                        {countContract}
+                      </div>
+                      <div className="col-auto mt-3">Contract</div>
+                    </div>
+                    <div className="col-auto">
+                      <FaFileContract size={30} />
+                      {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    </div>
+                  </div>
                 </div>
-                <div className="col-auto">
-                  <FaFileContract size={30} />
-                  {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                <div className="d-grid mt-3">
+                  <button
+                    className="btn btn-info fw-bolder"
+                    type="button"
+                    style={{ color: "#fff" }}
+                    onClick={handleContract}
+                  >
+                    More info <FiChevronsRight />
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="d-grid mt-3">
-              <button
-                className="btn btn-info fw-bolder"
-                type="button"
-                style={{ color: "#fff" }}
-                onClick={handleContract}
+            <div className="col-sm-6 col-md-3 col-lg-3 col-12">
+              <div
+                className="card"
+                style={{
+                  border: "solid 1px",
+                  // borderRadius: "30px",
+                  minHeight: "150px",
+                  backgroundColor: "#3B9AE1",
+                  color: "#fff",
+                  fontWeight: "bolder",
+                }}
               >
-                More info <FiChevronsRight />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-6 col-md-3 col-lg-3 col-12">
-          <div
-            className="card"
-            style={{
-              border: "solid 1px",
-              // borderRadius: "30px",
-              minHeight: "150px",
-              backgroundColor: "#3B9AE1",
-              color: "#fff",
-              fontWeight: "bolder",
-            }}
-          >
-            <div class="card-body">
-              <div className="d-flex justify-content-between">
-                <div className="col-auto">
-                  <div className="col-auto h5 fw-bolder">{countContractor}</div>
-                  <div className="col-auto mt-3">Contractor</div>
-                </div>
+                <div class="card-body">
+                  <div className="d-flex justify-content-between">
+                    <div className="col-auto">
+                      <div className="col-auto h5 fw-bolder">
+                        {countContractor}
+                      </div>
+                      <div className="col-auto mt-3">Contractor</div>
+                    </div>
 
-                <div className="col-auto">
-                  <BsFillPersonPlusFill size={30} />
-                  {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    <div className="col-auto">
+                      <BsFillPersonPlusFill size={30} />
+                      {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="d-grid mt-3">
+                  <button
+                    className="btn btn-info fw-bolder"
+                    type="button"
+                    style={{ color: "#fff" }}
+                    onClick={handleContractor}
+                  >
+                    More info <FiChevronsRight />
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="d-grid mt-3">
-              <button
-                className="btn btn-info fw-bolder"
-                type="button"
-                style={{ color: "#fff" }}
-                onClick={handleContractor}
+            <div className="col-sm-6 col-md-3 col-lg-3 col-12">
+              <div
+                className="card"
+                style={{
+                  border: "solid 1px",
+                  // borderRadius: "30px",
+                  minHeight: "150px",
+                  backgroundColor: "#FF8D29",
+                  color: "#fff",
+                  fontWeight: "bolder",
+                }}
               >
-                More info <FiChevronsRight />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-6 col-md-3 col-lg-3 col-12">
-          <div
-            className="card"
-            style={{
-              border: "solid 1px",
-              // borderRadius: "30px",
-              minHeight: "150px",
-              backgroundColor: "#FF8D29",
-              color: "#fff",
-              fontWeight: "bolder",
-            }}
-          >
-            <div class="card-body">
-              <div className="d-flex justify-content-between">
-                <div className="col-auto">
-                  <div className="col-auto h5 fw-bolder">{countTerm}</div>
-                  <div className="col-auto mt-3">Term</div>
-                </div>
+                <div class="card-body">
+                  <div className="d-flex justify-content-between">
+                    <div className="col-auto">
+                      <div className="col-auto h5 fw-bolder">{countTerm}</div>
+                      <div className="col-auto mt-3">Term</div>
+                    </div>
 
-                <div className="col-auto">
-                  <FaClipboardList size={30} />
-                  {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    <div className="col-auto">
+                      <FaClipboardList size={30} />
+                      {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="d-grid mt-3">
+                  <button
+                    className="btn btn-info fw-bolder"
+                    type="button"
+                    style={{ color: "#fff" }}
+                    onClick={handleTerm}
+                  >
+                    More info <FiChevronsRight />
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="d-grid mt-3">
-              <button
-                className="btn btn-info fw-bolder"
-                type="button"
-                style={{ color: "#fff" }}
-                onClick={handleTerm}
+            <div className="col-sm-6 col-md-3 col-lg-3 col-12">
+              <div
+                className="card"
+                style={{
+                  border: "solid 1px",
+                  // borderRadius: "30px",
+                  minHeight: "150px",
+                  backgroundColor: "#F55353",
+                  color: "#fff",
+                  fontWeight: "bolder",
+                }}
               >
-                More info <FiChevronsRight />
-              </button>
-            </div>
-          </div>
-        </div>
-        <div className="col-sm-6 col-md-3 col-lg-3 col-12">
-          <div
-            className="card"
-            style={{
-              border: "solid 1px",
-              // borderRadius: "30px",
-              minHeight: "150px",
-              backgroundColor: "#F55353",
-              color: "#fff",
-              fontWeight: "bolder",
-            }}
-          >
-            <div class="card-body">
-              <div className="d-flex justify-content-between">
-                <div className="col-auto">
-                  <div className="col-auto h5 fw-bolder">{countObligation}</div>
-                  <div className="col-auto mt-3">Clause</div>
-                </div>
+                <div class="card-body">
+                  <div className="d-flex justify-content-between">
+                    <div className="col-auto">
+                      <div className="col-auto h5 fw-bolder">
+                        {countObligation}
+                      </div>
+                      <div className="col-auto mt-3">Clause</div>
+                    </div>
 
-                <div className="col-auto">
-                  <HiClipboardList size={30} />
-                  {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    <div className="col-auto">
+                      <HiClipboardList size={30} />
+                      {/* <Image src={contract} width={70} height={70} alt="..." /> */}
+                    </div>
+                  </div>
+                </div>
+                <div className="d-grid mt-3">
+                  <button
+                    className="btn btn-info fw-bolder"
+                    type="button"
+                    style={{ color: "#fff" }}
+                    onClick={handleClause}
+                  >
+                    More info <FiChevronsRight />
+                  </button>
                 </div>
               </div>
             </div>
-            <div className="d-grid mt-3">
-              <button
-                className="btn btn-info fw-bolder"
-                type="button"
-                style={{ color: "#fff" }}
-                onClick={handleClause}
-              >
-                More info <FiChevronsRight />
-              </button>
-            </div>
           </div>
-        </div>
-      </div>
-      <div className="h3 mb-5">Recent Orders</div>
-
-      {res !== undefined && res !== "No record is found" ? (
-        <DataTable
-          columns={columns}
-          data={res}
-          pagination
-          customStyles={customStyle}
-          highlightOnHover
-          dense
-        />
+          <div className="h3 mb-5">Recent Orders</div>
+          {res !== undefined && res !== "No record is found" ? (
+            <DataTable
+              columns={columns}
+              data={res}
+              pagination
+              customStyles={customStyle}
+              highlightOnHover
+              dense
+            />
+          ) : (
+            "There are no records to display"
+          )}
+        </>
       ) : (
-        "There are no records to display"
+        <h4 className="mt-5">
+          You are allowed to view this page. <br />
+          <br />
+          <Link href="/" style={{ fontSize: "24px", fontWeight: "bolder" }}>
+            Login
+          </Link>
+        </h4>
       )}
     </>
   );

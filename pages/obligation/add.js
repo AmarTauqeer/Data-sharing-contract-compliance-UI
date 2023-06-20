@@ -1,4 +1,3 @@
-
 import Multiselect from "multiselect-react-dropdown";
 import React, { useEffect, useState } from "react";
 import Alert from "react-bootstrap/Alert";
@@ -27,9 +26,9 @@ const Add = (props) => {
   });
 
   const fetchContracor = async () => {
-    const data = await fetch(`http://127.0.0.1:5000/contract/contractors/`);
+    const data = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
     const res = await data.json();
-    
+
     if (res.length > 0) {
       setContractorData(res);
     }
@@ -65,14 +64,14 @@ const Add = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5000/contract/obligation/create/",
+      "http://127.0.0.1:5005/contract/obligation/create/",
       requestOptions
     );
     const result = await response.json();
 
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/obligations/",
+        "http://127.0.0.1:5005/contract/obligations/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -131,11 +130,13 @@ const Add = (props) => {
                   <span>End Date</span>
                 </div>
                 <div className="col-lg-6">
-                  <DateTimePicker
-                    onChange={setEndDate}
-                    value={endDate}
-                    name="endDate"
-                  />
+                  <div className="card-body" style={{color:'black'}}>
+                    <DateTimePicker
+                      onChange={setEndDate}
+                      value={endDate}
+                      name="endDate"
+                    />
+                  </div>
                 </div>
               </div>
               <div className="d-flex row align-items-center mb-3">

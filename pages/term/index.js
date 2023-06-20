@@ -1,17 +1,14 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5000/contract/terms/`);
+  const data = await fetch(`http://127.0.0.1:5005/contract/terms/`);
   const res = await data.json();
 
-  const oblData = await fetch(`http://127.0.0.1:5000/contract/obligations/`);
+  const oblData = await fetch(`http://127.0.0.1:5005/contract/obligations/`);
   const resObligation = await oblData.json();
 
-  const typeData = await fetch(`http://127.0.0.1:5000/contract/term/types`);
+  const typeData = await fetch(`http://127.0.0.1:5005/contract/term/types`);
   const resType = await typeData.json();
-  console.log(resType)
 
-
-
-  return { props: { res, resObligation,resType } };
+  return { props: { res, resObligation, resType } };
 };
 
 import React, { useEffect, useState } from "react";
@@ -20,18 +17,17 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { GrAddCircle } from "react-icons/gr";
 import { FiSearch } from "react-icons/fi";
 
-
 import DataTable from "react-data-table-component";
 import Add from "./add";
 import Edit from "./edit";
 import Delete from "./delete";
-
+import Link from "next/link";
 
 const Term = (props) => {
-
   const [filterTerms, setFilterTerms] = useState([]);
   const [termData, setTermData] = useState(props.res);
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
 
   const callBack = async (childData) => {
     setTermData(childData);
@@ -83,7 +79,8 @@ const Term = (props) => {
                   if (element) {
                     // console.log(element)
                     obl_des_arr.push(element.obligationDescription);
-                    let lastElement = props.resObligation[props.resObligation.length - 1];
+                    let lastElement =
+                      props.resObligation[props.resObligation.length - 1];
                     if (x !== lastElement) {
                       obl_des_arr.push(",");
                     }
@@ -206,58 +203,73 @@ const Term = (props) => {
     setFilterTerms(filtered);
   };
 
-  
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(getData);
+  }, []);
+
   return (
     <>
-      <div className="h3 mt-5 mb-5">Contract Term</div>
+      {user !== null && user !== undefined ? (
+        <>
+          <div className="h3 mt-5 mb-5">Contract Term</div>
+          <div className="d-flex justify-content-between bd-highlight mb-3">
+            <div>
+              <span
+                className="input-group-text btn btn-sm btn-info"
+                style={{ color: "#fff" }}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                Add Term &nbsp;
+                <GrAddCircle size={20} />
+              </span>
+            </div>
 
-      <div className="d-flex justify-content-between bd-highlight mb-3">
-        <div>
-          <span
-            className="input-group-text btn btn-sm btn-info"
-            style={{ color: "#fff" }}
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Add Term &nbsp;
-            <GrAddCircle size={20} />
-          </span>
-        </div>
-
-        <div>
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search here"
-              // value={search}
-              onChange={handleChange}
-            />
-            <span className="input-group-text">
-              <FiSearch size={22} />
-            </span>
+            <div>
+              <div className="input-group mb-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search here"
+                  // value={search}
+                  onChange={handleChange}
+                />
+                <span className="input-group-text">
+                  <FiSearch size={22} />
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {termData !== "No data found for this ID" ? (
-        <DataTable
-          columns={columns}
-          data={filterTerms.length >= 1 ? filterTerms : termData}
-          pagination
-          customStyles={customStyle}
-          highlightOnHover
-          dense
-        />
+          {termData !== "No data found for this ID" ? (
+            <DataTable
+              columns={columns}
+              data={filterTerms.length >= 1 ? filterTerms : termData}
+              pagination
+              customStyles={customStyle}
+              highlightOnHover
+              dense
+            />
+          ) : (
+            "There are no records to display"
+          )}
+
+          {/* add modal */}
+
+          <Add handleCallBack={callBack} />
+
+          <Edit data={data} handleCallBack={callBack} />
+          <Delete id={data.id} handleCallBack={callBack} />
+        </>
       ) : (
-        "There are no records to display"
+        <h4 className="mt-5">
+          You are allowed to view this page. <br />
+          <br />
+          <Link href="/" style={{ fontSize: "24px", fontWeight: "bolder" }}>
+            Login
+          </Link>
+        </h4>
       )}
-
-      {/* add modal */}
-
-      <Add handleCallBack={callBack} />
-
-      <Edit data={data} handleCallBack={callBack} />
-      <Delete id={data.id} handleCallBack={callBack} />
     </>
   );
 };

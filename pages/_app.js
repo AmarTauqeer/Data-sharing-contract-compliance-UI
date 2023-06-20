@@ -9,10 +9,8 @@ import "react-calendar/dist/Calendar.css";
 import "react-clock/dist/Clock.css";
 import NextNProgress from "nextjs-progressbar";
 import { useEffect } from "react";
-import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }) {
-
   useEffect(() => {
     typeof document !== undefined
       ? require("bootstrap/dist/js/bootstrap")

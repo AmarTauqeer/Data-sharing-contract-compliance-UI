@@ -1,5 +1,5 @@
 export const getServerSideProps = async () => {
-  const data = await fetch("http://127.0.0.1:5000/contract/companies/");
+  const data = await fetch("http://127.0.0.1:5005/contract/companies/");
   const res = await data.json();
   return { props: { res } };
 };
@@ -17,13 +17,13 @@ const Delete = (props) => {
     //   body: JSON.stringify(postData),
     };
     const res = await fetch(
-      `http://127.0.0.1:5000/contract/company/delete/${props.id}/`,
+      `http://127.0.0.1:5005/contract/company/delete/${props.id}/`,
       requestOptions
     );
     const result = await res.json();
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/companies/",
+        "http://127.0.0.1:5005/contract/companies/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

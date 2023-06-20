@@ -40,7 +40,7 @@ const Add = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5000/contract/term/type/create/",
+      "http://127.0.0.1:5005/contract/term/type/create/",
       requestOptions
     );
     const result = await response.json();
@@ -48,7 +48,7 @@ const Add = (props) => {
     // fetch type data and send back to main component
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/term/types",
+        "http://127.0.0.1:5005/contract/term/types",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

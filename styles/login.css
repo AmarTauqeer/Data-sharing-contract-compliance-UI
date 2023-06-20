@@ -16,11 +16,11 @@
   width: 100vw;
   margin: -20px 0 50px;
 
-  /* background: url(../public/images/contract-cover.jpg) no-repeat center center fixed;
+  background: url(../public/images/contract-cover.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover; */
+  background-size: cover;
 }
 
 h1 {
@@ -34,20 +34,17 @@ p {
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
-}
+} 
 
-span {
-  font-size: 12px;
-}
 
-a {
+ a {
   color: #333;
   font-size: 14px;
   text-decoration: none;
   margin: 15px 0;
 }
 
-button {
+.login-button {
   border-radius: 20px;
   border: 1px solid #ff4b2b;
   background-color: #ff4b2b;
@@ -58,22 +55,23 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+  border-radius: 25px;
 }
 
-button:active {
+.login-button:active {
   transform: scale(0.95);
 }
 
-button:focus {
+.login-button:focus {
   outline: none;
 }
 
-button.ghost {
+.login-button.ghost {
   background-color: transparent;
   border-color: #ffffff;
 }
 
-form {
+.login-form {
   background-color: #ffffff;
   display: flex;
   align-items: center;
@@ -84,13 +82,13 @@ form {
   text-align: center;
 }
 
-input {
+/* .login-input {
   background-color: #eee;
   border: none;
   padding: 12px 15px;
   margin: 8px 0;
   width: 100%;
-}
+} */
 
 .login-container {
   background-color: #fff;

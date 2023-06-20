@@ -92,7 +92,7 @@ const Edit = (props) => {
 
   const fetchCompany = async () => {
     const res = await fetch(
-      `http://127.0.0.1:5000/contract/companies/`
+      `http://127.0.0.1:5005/contract/companies/`
     );
 
     const data = await res.json();
@@ -146,13 +146,13 @@ const Edit = (props) => {
     };
 
     const response = await fetch(
-      "http://127.0.0.1:5000/contract/contractor/update/",
+      "http://127.0.0.1:5005/contract/contractor/update/",
       requestOptions
     );
     const result = await response.json();
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/contractors/",
+        "http://127.0.0.1:5005/contract/contractors/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

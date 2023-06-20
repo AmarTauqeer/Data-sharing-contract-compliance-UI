@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 import photo from "../../../public/images/photo.jpg";
 import { MdNotificationsActive } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
-
+import { useRouter } from "next/router";
 const Header = () => {
+  const route = useRouter();
+  const handleLogOut = () => {
+    localStorage.removeItem("userInfo")
+    route.push("/");
+  };
   return (
     <>
-      <div style={{ minWidth: "1300px", marginBottom:'5px' }}>
+      <div style={{ minWidth: "1300px", marginBottom: "5px" }}>
         <nav className="navbar navbar-expand-lg">
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav ms-auto">
@@ -35,9 +40,12 @@ const Header = () => {
                           </Link>
                         </li>
                         <li>
-                          <a className="dropdown-item" href="/login">
+                          <button
+                            className="dropdown-item"
+                            onClick={handleLogOut}
+                          >
                             Logout
-                          </a>
+                          </button>
                         </li>
                       </ul>
                     </div>

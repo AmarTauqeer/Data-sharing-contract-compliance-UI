@@ -1,10 +1,10 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5000/contract/contractors/`);
+  const data = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
   const res = await data.json();
   return { props: { res } };
 };
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FiEdit } from "react-icons/fi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { GrAddCircle } from "react-icons/gr";
@@ -16,13 +16,13 @@ import Edit from "./edit";
 import Delete from "./delete";
 import { CgDetailsMore } from "react-icons/cg";
 import Detail from "./detail";
-
-
+import Link from "next/link";
 
 const Contractor = (props) => {
   const [filterContractors, setFilterContractors] = useState([]);
   const [contractorData, setContractorData] = useState(props.res);
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
 
   const callBack = async (childData) => {
     setContractorData(childData);
@@ -245,58 +245,75 @@ const Contractor = (props) => {
     setFilterContractors(filtered);
   };
 
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(getData);
+  }, []);
+
   return (
     <>
-      <div className="h3 mt-5 mb-5">Contractor Information</div>
+      {user !== null && user !== undefined ? (
+        <>
+          {" "}
+          <div className="h3 mt-5 mb-5">Contractor Information</div>
+          <div className="d-flex justify-content-between bd-highlight mb-3">
+            <div>
+              <span
+                className="input-group-text btn btn-sm btn-info"
+                style={{ color: "#fff" }}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                Add Contractor &nbsp;
+                <GrAddCircle size={20} />
+              </span>
+            </div>
 
-      <div className="d-flex justify-content-between bd-highlight mb-3">
-        <div>
-          <span
-            className="input-group-text btn btn-sm btn-info"
-            style={{ color: "#fff" }}
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Add Contractor &nbsp;
-            <GrAddCircle size={20} />
-          </span>
-        </div>
-
-        <div>
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search here"
-              onChange={handleChange}
-            />
-            <span className="input-group-text">
-              <FiSearch size={22} />
-            </span>
+            <div>
+              <div className="input-group mb-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search here"
+                  onChange={handleChange}
+                />
+                <span className="input-group-text">
+                  <FiSearch size={22} />
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {contractorData !== "No record is found" ? (
-        <DataTable
-          columns={columns}
-          data={
-            filterContractors.length >= 1 ? filterContractors : contractorData
-          }
-          pagination
-          customStyles={customStyle}
-          highlightOnHover
-          dense
-        />
+          {contractorData !== "No record is found" ? (
+            <DataTable
+              columns={columns}
+              data={
+                filterContractors.length >= 1
+                  ? filterContractors
+                  : contractorData
+              }
+              pagination
+              customStyles={customStyle}
+              highlightOnHover
+              dense
+            />
+          ) : (
+            "There are no records to display"
+          )}
+          {/* add modal */}
+          <Add handleCallBack={callBack} />
+          <Edit data={data} handleCallBack={callBack} />
+          <Detail data={data} />
+          <Delete id={data.id} handleCallBack={callBack} />
+        </>
       ) : (
-        "There are no records to display"
+        <h4 className="mt-5">
+          You are allowed to view this page. <br />
+          <br />
+          <Link href="/" style={{ fontSize: "24px", fontWeight: "bolder" }}>
+            Login
+          </Link>
+        </h4>
       )}
-      {/* add modal */}
-
-      <Add handleCallBack={callBack} />
-
-      <Edit data={data} handleCallBack={callBack} />
-      <Detail data={data} />
-      <Delete id={data.id} handleCallBack={callBack} />
     </>
   );
 };

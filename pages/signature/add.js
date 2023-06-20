@@ -25,7 +25,7 @@ const Add = (props) => {
   useEffect(() => {
     const fetchSignature = async () => {
       const res = await fetch(
-        `http://127.0.0.1:5000/contract/signatures/`
+        `http://127.0.0.1:5005/contract/signatures/`
       );
       const data = await res.json();
       setSignatureData(data);
@@ -33,7 +33,7 @@ const Add = (props) => {
 
     const fetchContractor = async () => {
       const res = await fetch(
-        `http://127.0.0.1:5000/contract/contractors/`
+        `http://127.0.0.1:5005/contract/contractors/`
       );
       const data = await res.json();
       // console.log(data);
@@ -65,13 +65,13 @@ const Add = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5000/contract/signature/create/",
+      "http://127.0.0.1:5005/contract/signature/create/",
       requestOptions
     );
     const result = await response.json();
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/signatures/",
+        "http://127.0.0.1:5005/contract/signatures/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" }, 

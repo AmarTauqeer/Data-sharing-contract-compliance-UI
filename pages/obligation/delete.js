@@ -10,13 +10,13 @@ const Delete = (props) => {
       //   body: JSON.stringify(postData),
     };
     const res = await fetch(
-      `http://127.0.0.1:5000/contract/obligation/delete/${props.id}/`,
+      `http://127.0.0.1:5005/contract/obligation/delete/${props.id}/`,
       requestOptions
     );
     const result = await res.json();
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5000/contract/obligations/",
+        "http://127.0.0.1:5005/contract/obligations/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

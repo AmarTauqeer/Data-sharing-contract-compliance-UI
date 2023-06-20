@@ -1,11 +1,9 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5000/contract/obligations/`);
+  const data = await fetch(`http://127.0.0.1:5005/contract/obligations/`);
   const res = await data.json();
 
-  const contData = await fetch(`http://127.0.0.1:5000/contract/contractors/`);
+  const contData = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
   const resContractor = await contData.json();
-
-
 
   return { props: { res, resContractor } };
 };
@@ -20,15 +18,13 @@ import Add from "./add";
 import Delete from "./delete";
 import Detail from "./detail";
 import { CgDetailsMore } from "react-icons/cg";
-
-
+import Link from "next/link";
 
 const Obligation = (props) => {
   const [filterObligations, setFilterObligations] = useState([]);
   const [obligationData, setObligationData] = useState(props.res);
   const [data, setData] = useState([]);
-
-
+  const [user, setUser] = useState(null);
 
   const callBack = async (childData) => {
     setObligationData(childData);
@@ -276,58 +272,74 @@ const Obligation = (props) => {
     setFilterObligations(filtered);
   };
 
+  useEffect(() => {
+    const getData = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(getData);
+  }, []);
+
   return (
     <>
-      <div className="h3 mt-5 mb-5">Contract Clauses</div>
+      {user !== null && user !== undefined ? (
+        <>
+          {" "}
+          <div className="h3 mt-5 mb-5">Contract Clauses</div>
+          <div className="d-flex justify-content-between bd-highlight mb-3">
+            <div>
+              <span
+                className="input-group-text btn btn-sm btn-info"
+                style={{ color: "#fff" }}
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                Add Clause &nbsp;
+                <GrAddCircle size={20} />
+              </span>
+            </div>
 
-      <div className="d-flex justify-content-between bd-highlight mb-3">
-        <div>
-          <span
-            className="input-group-text btn btn-sm btn-info"
-            style={{ color: "#fff" }}
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-          >
-            Add Clause &nbsp;
-            <GrAddCircle size={20} />
-          </span>
-        </div>
-
-        <div>
-          <div className="input-group mb-4">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Search contractor name"
-              onChange={handleChange}
-            />
-            <span className="input-group-text">
-              <FiSearch size={22} />
-            </span>
+            <div>
+              <div className="input-group mb-4">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search contractor name"
+                  onChange={handleChange}
+                />
+                <span className="input-group-text">
+                  <FiSearch size={22} />
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      {obligationData !== "No record found" ? (
-        <DataTable
-          columns={columns}
-          data={
-            filterObligations.length >= 1 ? filterObligations : obligationData
-          }
-          pagination
-          customStyles={customStyle}
-          highlightOnHover
-          dense
-        />
+          {obligationData !== "No record found" ? (
+            <DataTable
+              columns={columns}
+              data={
+                filterObligations.length >= 1
+                  ? filterObligations
+                  : obligationData
+              }
+              pagination
+              customStyles={customStyle}
+              highlightOnHover
+              dense
+            />
+          ) : (
+            "There are no records to display"
+          )}
+          {/* add modal */}
+          <Add handleCallBack={callBack} />
+          <Detail data={data} />
+          <Delete id={data.id} handleCallBack={callBack} />
+        </>
       ) : (
-        "There are no records to display"
+        <h4 className="mt-5">
+          You are allowed to view this page. <br />
+          <br />
+          <Link href="/" style={{ fontSize: "24px", fontWeight: "bolder" }}>
+            Login
+          </Link>
+        </h4>
       )}
-
-      {/* add modal */}
-
-      <Add handleCallBack={callBack} />
-      <Detail data={data} />
-
-      <Delete id={data.id} handleCallBack={callBack} />
     </>
   );
 };
