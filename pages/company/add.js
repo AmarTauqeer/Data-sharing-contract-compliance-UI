@@ -75,13 +75,13 @@ const Add = (props) => {
     console.log(props.res)
 
     const response = await fetch(
-      "http://127.0.0.1:5005/contract/company/create/",
+      "https://actool.contract-license.sti2.at/contract/company/create/",
       requestOptions
     );
     const result = await response.json();
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5005/contract/companies/",
+        "https://actool.contract-license.sti2.at/contract/companies/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

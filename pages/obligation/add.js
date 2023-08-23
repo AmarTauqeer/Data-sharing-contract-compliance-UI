@@ -26,7 +26,7 @@ const Add = (props) => {
   });
 
   const fetchContracor = async () => {
-    const data = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
+    const data = await fetch(`https://actool.contract-license.sti2.at/contract/contractors/`);
     const res = await data.json();
 
     if (res.length > 0) {
@@ -64,14 +64,14 @@ const Add = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5005/contract/obligation/create/",
+      "https://actool.contract-license.sti2.at/contract/obligation/create/",
       requestOptions
     );
     const result = await response.json();
 
     if (result) {
       const response = await fetch(
-        "http://127.0.0.1:5005/contract/obligations/",
+        "https://actool.contract-license.sti2.at/contract/obligations/",
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

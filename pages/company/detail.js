@@ -7,7 +7,7 @@ const Detail = (props) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const fetchData = async () => {
-    const res = await fetch(`http://127.0.0.1:5005/contract/companies/`);
+    const res = await fetch(`https://actool.contract-license.sti2.at/contract/companies/`);
     const data = await res.json();
     // console.log(data);
     if (data !== "No record is found") {

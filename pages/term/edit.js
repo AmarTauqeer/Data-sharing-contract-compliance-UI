@@ -59,7 +59,7 @@ const Edit = (props) => {
   useEffect(() => {
     const fetchType = async () => {
       const res = await fetch(
-        `http://127.0.0.1:5005/contract/term/types`
+        `https://actool.contract-license.sti2.at/contract/term/types`
       );
       const data = await res.json();
       let temp = [];
@@ -72,7 +72,7 @@ const Edit = (props) => {
 
     const fetchObligation = async () => {
       const res = await fetch(
-        `http://127.0.0.1:5005/contract/obligations/`
+        `https://actool.contract-license.sti2.at/contract/obligations/`
       );
       const data = await res.json();
       // console.log(data);
@@ -121,13 +121,13 @@ const Edit = (props) => {
     };
 
     const response = await fetch(
-      "http://127.0.0.1:5005/contract/term/update/",
+      "https://actool.contract-license.sti2.at/contract/term/update/",
       requestOptions
     );
     const result = await response.json();
     if (result) {
       const response = await fetch(
-        `http://127.0.0.1:5005/contract/terms/`,
+        `https://actool.contract-license.sti2.at/contract/terms/`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

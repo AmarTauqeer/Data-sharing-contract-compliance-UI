@@ -29,7 +29,7 @@ const Index = () => {
   const onSubmit = async (data) => {
     let token = "";
     if (data) {
-      const fetchData = await fetch(`http://127.0.0.1:5005/contract/login/`, {
+      const fetchData = await fetch(`https://actool.contract-license.sti2.at/contract/login/`, {
         method: "POST",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -40,6 +40,7 @@ const Index = () => {
         }),
       });
       const res = await fetchData.json();
+      console.log(res)
       if (res) {
         if (res.error === "Unauthorized") {
           setErrorDiv(res.error);
@@ -60,7 +61,7 @@ const Index = () => {
     console.log(data);
     if (data) {
       const fetchData = await fetch(
-        `http://127.0.0.1:5005/contract/register/`,
+        `https://actool.contract-license.sti2.at/contract/register/`,
         {
           method: "POST",
           headers: {

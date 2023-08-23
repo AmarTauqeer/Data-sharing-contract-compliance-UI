@@ -55,13 +55,13 @@ const Edit = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5005/contract/term/type/update/",
+      "https://actool.contract-license.sti2.at/contract/term/type/update/",
       requestOptions
     );
     const result = await response.json();
 
     if (result) {
-      const res = await fetch("http://127.0.0.1:5005/contract/term/types", {
+      const res = await fetch("https://actool.contract-license.sti2.at/contract/term/types", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });

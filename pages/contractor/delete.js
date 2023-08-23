@@ -12,14 +12,14 @@ const Delete = (props) => {
       //   body: JSON.stringify(postData),
     };
     const res = await fetch(
-      `http://127.0.0.1:5005/contract/contractor/delete/${props.id}/`,
+      `https://actool.contract-license.sti2.at/contract/contractor/delete/${props.id}/`,
       requestOptions
     );
     const result = await res.json();
 
     if (result) {
       const response = await fetch(
-        `http://127.0.0.1:5005/contract/contractors/`,
+        `https://actool.contract-license.sti2.at/contract/contractors/`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },

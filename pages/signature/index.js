@@ -1,8 +1,8 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5005/contract/signatures/`);
+  const data = await fetch(`https://actool.contract-license.sti2.at/contract/signatures/`);
   const res = await data.json();
 
-  const contData = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
+  const contData = await fetch(`https://actool.contract-license.sti2.at/contract/contractors/`);
   const resContractor = await contData.json();
   return { props: { res, resContractor } };
 };

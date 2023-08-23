@@ -1,5 +1,5 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5005/contract/list_of_contracts/`);
+  const data = await fetch(`https://actool.contract-license.sti2.at/contract/list_of_contracts/`);
   const res = await data.json();
 
   let countContract = 0;
@@ -11,7 +11,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const oblData = await fetch(`http://127.0.0.1:5005/contract/obligations/`);
+  const oblData = await fetch(`https://actool.contract-license.sti2.at/contract/obligations/`);
   const resObligation = await oblData.json();
 
   let countObligation = 0;
@@ -23,7 +23,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const termData = await fetch(`http://127.0.0.1:5005/contract/terms/`);
+  const termData = await fetch(`https://actool.contract-license.sti2.at/contract/terms/`);
   const resTerm = await termData.json();
 
   let countTerm = 0;
@@ -35,7 +35,7 @@ export const getServerSideProps = async () => {
     }
   }
 
-  const contData = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
+  const contData = await fetch(`https://actool.contract-license.sti2.at/contract/contractors/`);
   const resContractor = await contData.json();
 
   let countContractor = 0;

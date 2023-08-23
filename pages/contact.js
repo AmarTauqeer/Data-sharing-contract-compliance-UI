@@ -1,5 +1,5 @@
 export const getServerSideProps = async () => {
-    const data = await fetch('http://127.0.0.1:5005/contract/term/types')
+    const data = await fetch('https://actool.contract-license.sti2.at/contract/term/types')
     const res = await data.json()
     return { props: {res} }
   }

@@ -1,11 +1,11 @@
 export const getServerSideProps = async () => {
-  const data = await fetch(`http://127.0.0.1:5005/contract/terms/`);
+  const data = await fetch(`https://actool.contract-license.sti2.at/contract/terms/`);
   const res = await data.json();
 
-  const oblData = await fetch(`http://127.0.0.1:5005/contract/obligations/`);
+  const oblData = await fetch(`https://actool.contract-license.sti2.at/contract/obligations/`);
   const resObligation = await oblData.json();
 
-  const typeData = await fetch(`http://127.0.0.1:5005/contract/term/types`);
+  const typeData = await fetch(`https://actool.contract-license.sti2.at/contract/term/types`);
   const resType = await typeData.json();
 
   return { props: { res, resObligation, resType } };

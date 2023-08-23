@@ -15,7 +15,7 @@ const Detail = (props) => {
 
   const fetchData = async () => {
     const res = await fetch(
-      `http://127.0.0.1:5005/contract/list_of_contracts/`
+      `https://actool.contract-license.sti2.at/contract/list_of_contracts/`
     );
     const data = await res.json();
     // console.log(data);
@@ -27,7 +27,7 @@ const Detail = (props) => {
   };
 
   const fetchContractorData = async () => {
-    const res = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
+    const res = await fetch(`https://actool.contract-license.sti2.at/contract/contractors/`);
     const data = await res.json();
     if (data !== "No record is found") {
       setFilterContractor(data);
@@ -35,7 +35,7 @@ const Detail = (props) => {
   };
 
   const fetchTermData = async () => {
-    const res = await fetch(`http://127.0.0.1:5005/contract/terms/`);
+    const res = await fetch(`https://actool.contract-license.sti2.at/contract/terms/`);
     const data = await res.json();
     if (data !== "No data found for this ID") {
       // console.log(data)

@@ -78,13 +78,13 @@ const Add = (props) => {
     // console.log("hi");
 
     const response = await fetch(
-      "http://127.0.0.1:5005/contract/contractor/create/",
+      "https://actool.contract-license.sti2.at/contract/contractor/create/",
       requestOptions
     );
     const result = await response.json();
     if (result) {
       const response = await fetch(
-        `http://127.0.0.1:5005/contract/contractors/`,
+        `https://actool.contract-license.sti2.at/contract/contractors/`,
         {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -102,7 +102,7 @@ const Add = (props) => {
   };
 
   const fetchCompany = async () => {
-    const data = await fetch("http://127.0.0.1:5005/contract/companies/");
+    const data = await fetch("https://actool.contract-license.sti2.at/contract/companies/");
     const res = await data.json();
     if (res.length>0) {
       setCompanyData(res)

@@ -8,7 +8,7 @@ const Detail = (props) => {
   const [showAlert, setShowAlert] = useState(false);
 
   const fetchData = async () => {
-    const res = await fetch(`http://127.0.0.1:5005/contract/contractors/`);
+    const res = await fetch(`https://actool.contract-license.sti2.at/contract/contractors/`);
     const data = await res.json();
     // console.log(data);
 

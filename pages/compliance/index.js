@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export const getServerSideProps = async () => {
-  const data = await fetch("http://127.0.0.1:5005/contract/compliance/");
+  const data = await fetch("https://actool.contract-license.sti2.at/contract/compliance/");
   const res = await data.json();
   return { props: { res } };
 };
