@@ -1,0 +1,14 @@
+version: '3.5'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: contracting-ui
+    restart: always
+    ports:
+      - '5009:5009'
+    volumes:
+      - .:/Data-sharing-contract-compliance-UI
+      - /Data-sharing-contract-compliance-UI/node_modules
