@@ -4,7 +4,7 @@ export const getServerSideProps = async () => {
 
   let countContract = 0;
 
-  if (res !== undefined) {
+  if (res !== undefined && res!=="No record found") {
     for (let index = 0; index < res.length; index++) {
       const element = res[index];
       countContract += 1;
@@ -16,7 +16,7 @@ export const getServerSideProps = async () => {
 
   let countObligation = 0;
 
-  if (resObligation !== undefined) {
+  if (resObligation !== undefined && resObligation!=="No record found") {
     for (let index = 0; index < resObligation.length; index++) {
       const element = resObligation[index];
       countObligation += 1;
@@ -28,7 +28,7 @@ export const getServerSideProps = async () => {
 
   let countTerm = 0;
 
-  if (resTerm !== undefined) {
+  if (resTerm !== undefined && resTerm!=="No record found") {
     for (let index = 0; index < resTerm.length; index++) {
       const element = resTerm[index];
       countTerm += 1;
@@ -40,7 +40,7 @@ export const getServerSideProps = async () => {
 
   let countContractor = 0;
 
-  if (resContractor !== undefined) {
+  if (resContractor !== undefined && resContractor!=="No record found") {
     for (let index = 0; index < resContractor.length; index++) {
       const element = resContractor[index];
       countContractor += 1;

@@ -164,7 +164,8 @@ const Add = (props) => {
                     })}
                   >
                     <option>Select...</option>
-                    {contractorData.map((x) => {
+
+                    {contractorData && contractorData.map((x) => {
                       return (
                         <>
                           <option value={x.contractorId}>{x.name}</option>

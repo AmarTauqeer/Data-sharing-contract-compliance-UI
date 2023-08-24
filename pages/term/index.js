@@ -241,7 +241,7 @@ const Term = (props) => {
               </div>
             </div>
           </div>
-          {termData !== "No data found for this ID" ? (
+          {termData && termData !== "No data found for this ID" ? (
             <DataTable
               columns={columns}
               data={filterTerms.length >= 1 ? filterTerms : termData}
